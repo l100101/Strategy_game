@@ -1,49 +1,45 @@
-// пакуем данные любого типа (например, структура) в буфер и отправляем
-// принимаем и распаковываем в примере packData_mini_read
+#include <avr/io.h>
+#include <util/delay.h>
 
-//Code for tower. any tower have adress, struct of data and LED indicator
+#define SIGNAL_PIN PB3 // Выберите пин, который будет использоваться для отправки сигнала
+#define ADC_PIN 1 // Используйте нужный аналоговый пин
 
-#include "GBUSmini.h"	// мини-библиотека с лёгкими функциями
+ADCSRA = (1 << ADEN) | (1 << ADPS1) | (1 << ADPS0); // включить АЦП, предделитель на 8
+ADMUX = (1 << REFS0); // используем Vcc как опорное напряжение
 
-#define TX_PIN 4    // пин
-#define RX_ADDR 3   // адрес приёмника
-#define TX_ADDR 5   // наш адрес
-
-// структура для отправки
-struct Tower {
-  byte val_b;
-  int val_i;
-  float val_f;
-  byte x;
-  byte y;
-  byte health;
-  byte dmg;
-  byte tear;
-  byte cost;
-  byte team;
-  //String "Tower";
-};
-bool flag =0;
-
-Tower txData;              // отправная структура
-byte buffer[sizeof(txData)];  // отправной буфер
-
-void setup() {
-  // ПИН ОБЯЗАТЕЛЬНО PULLUP!!!111
-  pinMode(TX_PIN, INPUT_PULLUP);
-
-  // заполняем структуру
-  Tower.x = 2;
-  Tower.y = 2;
-  Tower.dmg = 1;
-
-  // пакуем структуру в буфер
-  packDataBytes(buffer, txData);
+uint16_t readADC(uint8_t pin) {
+    ADMUX = (ADMUX & 0xF8) | pin; // выбираем канал АЦП
+    ADCSRA |= (1 << ADSC); // начинаем преобразование
+    while (ADCSRA & (1 << ADSC)); // ожидаем завершения преобразования
+    return ADC;
+}
+void respond() {
+  // Подать на пин высокий уровень
+  PORTB |= (1 << SIGNAL_PIN);
+  // Подождать немного времени, чтобы Arduino успело зарегистрировать сигнал
+  _delay_ms(5);
+  // Вернуть пин в низкий уровень
+  PORTB &= ~(1 << SIGNAL_PIN);
 }
 
-void loop() {
-  // пин, адрес получателя, адрес отправителя, дата, размер
-  if(flag)
-  GBUS_send(TX_PIN, RX_ADDR, TX_ADDR, buffer, sizeof(buffer));
-  delay(2000);
+uint8_t getAddress() {
+    uint16_t adcValue = readADC(ADC_PIN);
+    // Преобразуйте adcValue в адрес, используя вашу логику соответствия
+    return adcValue/10;//адрес от 0 до 9
+}
+int main(void) {
+  // Настройка пинов, таймеров и прерываний
+  // Настройка пина сигнала как выход
+  DDRB |= (1 << SIGNAL_PIN);
+  // Изначально установить пин в низкий уровень
+  PORTB &= ~(1 << SIGNAL_PIN);
+  // Имитация задержки, специфичной для слота
+  // Например, для слота №1 задержка будет 100 мс, для слота №2 - 200 мс и т.д.
+  _delay_ms(getAddress()); //
+
+  respond(); // Отправляем сигнал ответа
+
+  while(1) {
+    // Дополнительный код, если необходим
+  }
 }
