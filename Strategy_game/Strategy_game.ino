@@ -21,15 +21,15 @@ struct Factory
   int cost;
 };
 
-struct Tower
-{
-  int x;
-  int y;
-  int health;
-  int dmg;
-  int tear;
-  int cost;
-};
+// struct Tower
+// {
+//   int x;
+//   int y;
+//   int health;
+//   int dmg;
+//   int tear;
+//   int cost;
+// };
 
 struct MEX
 { // Mass Extractor
