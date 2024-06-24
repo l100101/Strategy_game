@@ -1,5 +1,5 @@
-#include "../libs/GyverBus/GBUSmini.h" // мини-библиотека с лёгкими функциями
-#include "../libs/tower/tower.h"
-#include "../libs/gameField/gameField.h"
-#include "../libs/unit/unit.h"
+#include "../lib/GyverBus/GBUSmini.h" // мини-библиотека с лёгкими функциями
+#include "../lib/tower/tower.h"
+#include "../lib/gameField/gameField.h"
+#include "../lib/unit/unit.h"
 #include <iostream>

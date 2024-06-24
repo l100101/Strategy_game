@@ -4,7 +4,7 @@
 
 
 #include "../alldefs.h"
-
+#include <ArduinoSTL.h>
 
 #define RX_PIN 4   // пин
 #define RX_ADDR 1  // наш адрес
@@ -59,15 +59,15 @@ const int numberOfMEX = 10;
 
 // Массив структур для хранения данных о юнитах
 Unit units[numberOfUnits];
-Tower towers[numberOfTowers];
+// Tower towers[numberOfTowers];
 MEX mex[numberOfMEX];
 
 Factory rxFac; // приёмная структурs
-Tower rxTow;
+// Tower rxTow;
 Unit rxUnit;
 MEX rxMEX;
 byte bufferFac[sizeof(rxFac)];   // приёмный буфер
-byte bufferTow[sizeof(rxTow)];   // приёмный буфер
+// byte bufferTow[sizeof(rxTow)];   // приёмный буфер
 byte bufferUnit[sizeof(rxUnit)]; // приёмный буфер
 byte bufferMEX[sizeof(rxMEX)];   // приёмный буфер
 
@@ -92,7 +92,7 @@ void setup()
 
 void loop()
 {
-  field_callback_p1();
+  // field_callback_p1();
   delay(100);
 }
 
