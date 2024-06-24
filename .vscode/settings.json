@@ -1,0 +1,5 @@
+{
+    "C_Cpp.default.compilerPath": "c:\\Users\\l100101\\.platformio\\packages\\toolchain-atmelavr\\bin\\avr-g++.exe",
+    "C_Cpp.default.cppStandard": "c++14",
+    "C_Cpp.default.cStandard": "gnu17"
+}
