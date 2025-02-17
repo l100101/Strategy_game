@@ -74,7 +74,7 @@ void setup()
   pinMode(RECEIVE_PIN, INPUT);
 
   // Инициализация последовательной связи для вывода данных в монитор порта
-  Serial.begin(9600);
+  Serial.begin(115200);
 }
 
 bool flag = false;
@@ -109,12 +109,37 @@ uint8_t recieving()
   }
   return 0;
 }
+
+uint8_t units_on_map[8][8] = {0};
+
 void loop()
 {
   // Послал сигнал, запустил таймер, жду ответа, останавливаю таймер
-  if (!flag)
-    sendSignal();
-  recieving();
+  // if (!flag)
+  //   sendSignal();
+  // recieving();
+
+  units_on_map[0][0] = 1;
+  units_on_map[0][1] = 0;
+  units_on_map[0][2] = 1;
+  units_on_map[0][3] = 1;
+  units_on_map[0][4] = 0;
+  units_on_map[0][5] = 1;
+  units_on_map[0][6] = 1;
+  units_on_map[0][7] = 1;
+  units_on_map[1][0] = 1;
+  units_on_map[1][1] = 1;
+
+  for (int y = 0; y < 8; y++) {
+    for (int x = 0; x < 8; x++) {
+        int color = units_on_map[y][x] ? 170 : 0; // Чередующиеся цвета
+        Serial.print(color); 
+        Serial.print(" ");
+    }
+    Serial.println();
+}
+Serial.println("---"); // Разделитель кадров
+delay(1000);
 }
 
 // int checkForResponse(unsigned long duration, unsigned long window)
