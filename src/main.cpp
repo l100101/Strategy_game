@@ -4,49 +4,9 @@
 
 #include "../alldefs.h"
 
-#define TRANSMIT_PIN 4 // пин для передачи
-#define RECEIVE_PIN 5  // пин для приёма сигнала
+жеска. ошибки из-за объектов этих
 
 // const int responsePin = 2; // Пин, на который приходит ответ от слота
-
-// Объявление структуры для юнитов
-struct Factory
-{
-  int x;
-  int y;
-  int health;
-  int tear;
-  int cost;
-};
-
-// struct Tower
-// {
-//   int x;
-//   int y;
-//   int health;
-//   int dmg;
-//   int tear;
-//   int cost;
-// };
-
-struct MEX
-{ // Mass Extractor
-  int x;
-  int y;
-  int health;
-  int tear;
-  int mass_per_sec;
-  int cost;
-};
-struct Unit
-{
-  int x;
-  int y;
-  int health;
-  int dmg;
-  int tear;
-  int cost;
-};
 
 // Количество юнитов, tower, MEX
 // const int numberOfUnits = 30;
@@ -67,29 +27,28 @@ struct Unit
 // byte bufferUnit[sizeof(rxUnit)]; // приёмный буфер
 // byte bufferMEX[sizeof(rxMEX)];   // приёмный буфер
 
-// uint8_t player1_towers[]={0};
-
-Unit unit_p1;
-Unit unit_p2;
-uint8_t units_on_map[8][8] = {0};
-
 
 void setup_units() {
-  unit_p1.x = 0;
-  unit_p1.y = 0;
+  // unit_p1.x = factory_p1.x + 0;
+  // unit_p1.y = factory_p1.y + 0;
 
-  unit_p2.x = 7;
-  unit_p2.y = 7;
+  // unit_p2.x = factory_p2.x - 0;
+  // unit_p2.y = factory_p2.y - 0;
+}
 
+void setup_factory() {
+  factory_p1.x = 0;
+  factory_p1.y = 0;
+
+  factory_p2.x = 7;
+  factory_p2.y = 7;
 }
 
 void setup()
 {
-  
   pinMode(RECEIVE_PIN, INPUT);
-
-  // Инициализация последовательной связи для вывода данных в монитор порта
   Serial.begin(115200);
+  setup_factory();
   setup_units();
 }
 
@@ -126,6 +85,13 @@ uint8_t recieving()
   return 0;
 }
 
+// void clear_field() {
+//   for (int y = 0; y < 8; y++) {
+//     for (int x = 0; x < 8; x++) {
+//         units_on_map[y][x] = 0;
+//     }
+//   }
+// }
 
 void loop()
 {
@@ -134,39 +100,39 @@ void loop()
   //   sendSignal();
   // recieving();
 
-  // ----------------------------- CLEAR FIELD -----------------------------
-  for (int y = 0; y < 8; y++) {
-    for (int x = 0; x < 8; x++) {
-        units_on_map[y][x] = 0;
-    }
-  }
 
-  units_on_map[unit_p1.y][unit_p1.x] = 1;
-  units_on_map[unit_p2.y][unit_p2.x] = 1;
+  // --------------------------- MOVE UNITS -----------------------------
+  if(timerField.tick())
+  {
+    field.clear();
+    
+    // units_on_map[unit_p1.y][unit_p1.x] = 1;
+    // units_on_map[unit_p2.y][unit_p2.x] = 1;
+    
+    // unit_p1.y++;
+    // unit_p2.y--;
+    
+    field.update(&unit_p1, &unit_p2);
+  }
   
+  // if (unit_p1.y > 7)
+  //   unit_p1.y = 0;
+  // if (unit_p2.y < 0)
+  //   unit_p2.y = 7;
+
   // ---------------------------- PRINT FIELD -----------------------------
   if(timerSend.tick())
   {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
-        int color = units_on_map[y][x] ? 255 : 0;
-        Serial.print(color); 
+        // int color = units_on_map[y][x] ? 255 : 0;
+        // Serial.print(color); 
         Serial.print(" ");
       }
       Serial.println();
     }
     Serial.println("---"); // Разделитель кадров 
   }
-  if(timerField.tick())
-  {
-    unit_p2.y--;
-    unit_p1.y++;
-  }
-  
-  if (unit_p2.y < 0)
-    unit_p2.y = 7;
-  if (unit_p1.y > 7)
-    unit_p1.y = 0;
 }
 
 // int checkForResponse(unsigned long duration, unsigned long window)
