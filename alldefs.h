@@ -10,3 +10,5 @@
 // #include <GyverIO.h>
 
 TimerMs timerTower(0, 1);
+TimerMs timerField(1000, 1, 0);
+TimerMs timerSend(1001, 1, 0);
