@@ -33,6 +33,7 @@ public:
 
     bool getFactoryExist(int8_t x, int8_t y);
     void clear();
+    void show();
     
 private:
     uint8_t _size;
