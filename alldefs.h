@@ -1,10 +1,12 @@
-#pragma once
+#ifndef ALLDEFS_H
+#define ALLDEFS_H
 
-#include "../lib/GyverBus/GBUSmini.h" // мини-библиотека с лёгкими функциями
-#include "../lib/tower/tower.h"
-#include "../lib/gameField/gameField.h"
-#include "../lib/unit/unit.h"
-
+// #include "../lib/GyverBus/GBUSmini.h" // мини-библиотека с лёгкими функциями
+// #include "lib/tower/tower.h"
+// #include "lib/gameField/gameField.h"
+// #include "lib/unit/unit.h"
+#include <gameField.h>
+#include <unit.h>
 #include <Arduino.h>
 #include <TimerMs.h>   
 #include <EncButton.h>
@@ -14,27 +16,25 @@
 #define TRANSMIT_PIN 4 // пин для передачи
 #define RECEIVE_PIN 5  // пин для приёма сигнала
 
-
-TimerMs timerTower(0, 1);
-TimerMs timerField(1000, 1, 0);
-TimerMs timerSend(1001, 1, 0);
-
-gameField field(8);
+extern TimerMs timerTower;
+extern TimerMs timerField;
+extern TimerMs timerSend;
+extern gameField field;
 
 
-Unit unit_p1(0, 0);
-Unit unit_p2(7, 7);
+// Unit unit_p1(0, 0);
+// Unit unit_p2(7, 7);
 // Объявление структуры для юнитов
-struct Factory
-{
-  int x;
-  int y;
-  int health;
-  int tear;
-  int cost;
-};
-Factory factory_p1;
-Factory factory_p2;
+// struct Factory
+// {
+//   int x;
+//   int y;
+//   int health;
+//   int tear;
+//   int cost;
+// };
+// Factory factory_p1;
+// Factory factory_p2;
 
 // struct Tower
 // {
@@ -56,12 +56,6 @@ Factory factory_p2;
 //   int cost;
 // };
 
-// struct Unit
-// {
-//   int x;
-//   int y;
-//   int health;
-//   int dmg;
-//   int tear;
-//   int cost;
-// };
+
+
+#endif

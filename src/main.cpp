@@ -3,8 +3,12 @@
 // Определять местоположение строения по сигналу с разных пинов(со сдвигового регистра)
 
 #include "../alldefs.h"
+gameField field(8);
+TimerMs timerTower(0, 1);
+TimerMs timerField(1000, 1, 0);
+TimerMs timerSend(1001, 1, 0);
 
-жеска. ошибки из-за объектов этих
+// жеска. ошибки из-за объектов этих
 
 // const int responsePin = 2; // Пин, на который приходит ответ от слота
 
@@ -37,11 +41,11 @@ void setup_units() {
 }
 
 void setup_factory() {
-  factory_p1.x = 0;
-  factory_p1.y = 0;
+  // factory_p1.x = 0;
+  // factory_p1.y = 0;
 
-  factory_p2.x = 7;
-  factory_p2.y = 7;
+  // factory_p2.x = 7;
+  // factory_p2.y = 7;
 }
 
 void setup()
@@ -52,38 +56,38 @@ void setup()
   setup_units();
 }
 
-bool flag = false;
-unsigned long startTime;
+// bool flag = false;
+// unsigned long startTime;
 
-uint8_t sendSignal()
-{
-  digitalWrite(TRANSMIT_PIN, HIGH);
-  digitalWrite(LED_BUILTIN, HIGH);
-  startTime = millis();
-  flag = 1;
+// uint8_t sendSignal()
+// {
+//   digitalWrite(TRANSMIT_PIN, HIGH);
+//   digitalWrite(LED_BUILTIN, HIGH);
+//   startTime = millis();
+//   flag = 1;
 
-  return 0;
-}
+//   return 0;
+// }
 
-uint8_t recieving()
-{
-  if (digitalRead(RECEIVE_PIN) == HIGH)
-  {
-    delayMicroseconds(50); // задержка 50 микросекунд для защиты от дребезга
+// uint8_t recieving()
+// {
+//   if (digitalRead(RECEIVE_PIN) == HIGH)
+//   {
+//     delayMicroseconds(50); // задержка 50 микросекунд для защиты от дребезга
     
-    if (digitalRead(RECEIVE_PIN) == LOW)//ложное 
-      return 0;
+//     if (digitalRead(RECEIVE_PIN) == LOW)//ложное 
+//       return 0;
 
-    digitalWrite(TRANSMIT_PIN, LOW);
-    digitalWrite(LED_BUILTIN, LOW);
+//     digitalWrite(TRANSMIT_PIN, LOW);
+//     digitalWrite(LED_BUILTIN, LOW);
 
-    int recieve_time = millis() - startTime;
-    if (recieve_time > 15)
-      Serial.println(recieve_time);
-    flag = 0;
-  }
-  return 0;
-}
+//     int recieve_time = millis() - startTime;
+//     if (recieve_time > 15)
+//       Serial.println(recieve_time);
+//     flag = 0;
+//   }
+//   return 0;
+// }
 
 // void clear_field() {
 //   for (int y = 0; y < 8; y++) {
@@ -92,6 +96,9 @@ uint8_t recieving()
 //     }
 //   }
 // }
+
+
+
 
 void loop()
 {
@@ -104,7 +111,7 @@ void loop()
   // --------------------------- MOVE UNITS -----------------------------
   if(timerField.tick())
   {
-    field.clear();
+    // field.clear();
     
     // units_on_map[unit_p1.y][unit_p1.x] = 1;
     // units_on_map[unit_p2.y][unit_p2.x] = 1;
@@ -112,7 +119,7 @@ void loop()
     // unit_p1.y++;
     // unit_p2.y--;
     
-    field.update(&unit_p1, &unit_p2);
+    // field.update(&unit_p1, &unit_p2);
   }
   
   // if (unit_p1.y > 7)

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef GAMEFIELD_H
+#define GAMEFIELD_H
 
 #define BASE_RANGE_P1   2
 #define BASE_RANGE_P2   2
@@ -15,18 +16,33 @@
 #define BASE_SPEED_P1   10
 #define BASE_SPEED_P2   10
 
-#include "../alldefs.h"
-#include "../unit/unit.h"
+#include <stdint.h>
 
 class gameField
 {
 public:
-    gameField(uint8_t size);
-    ~gameField();
-    void clear();
-    void update(Unit *unit_p1,Unit *unit_p2);
+
+    gameField(uint8_t size) : _size(size) {
+        clear();  // Вызываем метод очистки
+    }
+    
+
+    ~gameField() {}
+    
+    void clear() {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
+                units_on_map[i][j] = 0;
+            }
+        }
+    }
+    
+    // void update(Unit *unit_p1,Unit *unit_p2);
 private:
     uint8_t _size;
     uint8_t units_on_map[8][8] = {0};
 
 };
+
+
+#endif
