@@ -6,7 +6,9 @@
 // #include "lib/gameField/gameField.h"
 // #include "lib/unit/unit.h"
 #include <gameField.h>
-#include <unit.h>
+// #include <factory.h>
+// #include <unit.h>
+// #include "lib/factory/factory.h" // <"factory.h>
 #include <Arduino.h>
 #include <TimerMs.h>   
 #include <EncButton.h>

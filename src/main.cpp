@@ -8,7 +8,6 @@ TimerMs timerTower(0, 1);
 TimerMs timerField(1000, 1, 0);
 TimerMs timerSend(1001, 1, 0);
 
-// жеска. ошибки из-за объектов этих
 
 // const int responsePin = 2; // Пин, на который приходит ответ от слота
 
@@ -52,8 +51,7 @@ void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
   Serial.begin(115200);
-  setup_factory();
-  setup_units();
+
 }
 
 // bool flag = false;
@@ -111,8 +109,10 @@ void loop()
   // --------------------------- MOVE UNITS -----------------------------
   if(timerField.tick())
   {
-    // field.clear();
-    
+    field.clear();
+    // factory_p1.createUnit();
+    // factory_p2.createUnit();
+
     // units_on_map[unit_p1.y][unit_p1.x] = 1;
     // units_on_map[unit_p2.y][unit_p2.x] = 1;
     

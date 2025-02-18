@@ -13,29 +13,20 @@
 #define BASE_DEF_P1     10
 #define BASE_DEF_P2     10
 
-#define BASE_SPEED_P1   10
-#define BASE_SPEED_P2   10
-
 #include <stdint.h>
+#include <factory.h>
 
 class gameField
 {
 public:
-
     gameField(uint8_t size) : _size(size) {
         clear();  // Вызываем метод очистки
     }
-    
+    ~gameField() {};
 
-    ~gameField() {}
+
+    void clear();
     
-    void clear() {
-        for (int i = 0; i < 8; i++) {
-            for (int j = 0; j < 8; j++) {
-                units_on_map[i][j] = 0;
-            }
-        }
-    }
     
     // void update(Unit *unit_p1,Unit *unit_p2);
 private:

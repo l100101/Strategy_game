@@ -6,11 +6,11 @@
 class Unit
 {
     public:
-        Unit(int x, int y);
-        Unit();
+        Unit(int x, int y) : _x(x), _y(y) {}
         ~Unit();
-        uint8_t get_x();
-        uint8_t get_y();
+        uint8_t get_x() const { return _x; }
+        uint8_t get_y() const { return _y; }
+
     private:
         int _x;
         int _y;
@@ -18,8 +18,5 @@ class Unit
         int tear;
         int cost;
     };
-
-extern Unit unit_p1;
-extern Unit unit_p2;
 
 #endif

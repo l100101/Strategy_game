@@ -1,12 +1,6 @@
 #include "gameField.h"
 #include <Arduino.h>
 
-gameField::gameField(uint8_t size) : _size(size) {
-    clear();  // Вызываем метод очистки
-}
-
-
-gameField::~gameField() {}
 
 void gameField::clear() {
     for (int i = 0; i < 8; i++) {
