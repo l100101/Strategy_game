@@ -3,7 +3,6 @@
 
 #include <Arduino.h>
 #include <unit.h>
-
 class Factory {
     public:
         Factory(int8_t x, int8_t y, int8_t player) : _x(x), _y(y), _player(player) {}

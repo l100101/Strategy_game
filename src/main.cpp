@@ -5,7 +5,6 @@
 #include "../alldefs.h"
 
 
-
 gameField field(FIELD_SIZE);
 TimerMs timerTower(0, 1);
 TimerMs timerField(500, 1, 0);
