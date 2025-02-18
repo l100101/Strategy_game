@@ -28,23 +28,31 @@ public:
     void addFactory(int8_t x, int8_t y, int8_t player);
     void checkMoveField()
     {
-        // for(auto unit : units_on_map){
-        //     if (unit.get_x() >= _size)
-        //         // unit.set_x(0);
-        //         unit.~Unit();
-        //     if (unit.get_y() >= _size)
-        //         unit.set_y(0);
-        // }
-        if (units_on_map[0].get_x() >= _size)
-            units_on_map[0].set_x(0);
-        if (units_on_map[0].get_y() >= _size)
-            units_on_map[0].set_y(0);
+        auto it = units_on_map.begin();
+        while (it != units_on_map.end()) {
+            if (it->get_x() >= _size || it->get_y() >= _size) {
+                it = units_on_map.erase(it); // erase возвращает следующий итератор
+            } else {
+                ++it; // Переход к следующему элементу, если не удаляем
+            }
+        }
+        Serial.println("Units on map: " + String(units_on_map.size()));
     }
     void update(){
-        for(auto unit : units_on_map){
-            unit.moveX(1);
-            unit.moveY(1);
+        auto it = units_on_map.begin();
+        while (it != units_on_map.end()) {
+            it->moveX(1);
+            it->moveY(1);
+            ++it;
         }
+
+        // for(size_t i = 0; i < units_on_map.size(); i++){
+        //     units_on_map[i].moveX(1);
+        //     units_on_map[i].moveY(1);
+        //     // Serial.print(units_on_map[i].get_x());
+        //     // Serial.print(units_on_map[i].get_y());
+        //     // Serial.println(i);
+        // }
         checkMoveField();
 
     };
@@ -55,12 +63,16 @@ public:
         {
             units_on_map.push_back(Factory.createUnit());
         }
-
     }
 
     bool getUnitExist(int8_t x, int8_t y){
         //возвращаем true если есть юнит в указанной координате
-       return (x==units_on_map[0].get_x() && y==units_on_map[0].get_y());
+    //    return (x==units_on_map[0].get_x() && y==units_on_map[0].get_y());
+       for( auto unit : units_on_map){
+           if (unit.get_x() == x && unit.get_y() == y)
+               return true;
+       }
+       return 0;
     };
     void clear();
     
