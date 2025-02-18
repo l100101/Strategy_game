@@ -10,7 +10,6 @@ TimerMs timerTower(0, 1);
 TimerMs timerField(500, 1, 0);
 TimerMs timerSend(500, 1, 0);
 
-
 void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
@@ -30,7 +29,7 @@ void loop()
   if(timerField.tick())
   {
     field.createUnits();
-      
+
     field.update();
 
     // Serial.print(field.getUnitExist(0,0));
@@ -52,7 +51,7 @@ void loop()
       for (int x = 0; x < FIELD_SIZE; x++) {
         // int color = units_on_map[y][x] ? 255 : 0;
         uint8_t color = 0;
-        if( field.getUnitExist(x, y))
+        if(field.getUnitExist(x, y))
           color = 255;
         else if( field.getFactoryExist(x, y))
           color = 128;
@@ -64,7 +63,6 @@ void loop()
     }
     Serial.println("---"); // Разделитель кадров 
   }
-
 
 }
 

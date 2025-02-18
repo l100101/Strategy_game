@@ -13,7 +13,7 @@
 class Unit
 {
     public:
-        Unit(int8_t x, int8_t y, int8_t player) : _x(x), _y(y), _player(player) {};
+        Unit(int8_t x, int8_t y, int8_t player) : _x(x), _y(y), _player(player), _health(1) {};
         ~Unit(){};
         
 
@@ -29,16 +29,18 @@ class Unit
             if (_player == LOW_PLAYER) _y -= y;
             if (_player == HIGH_PLAYER) _y += y;
         }
+        void damaged(int8_t dmg) { _health -= dmg; }
+        int8_t get_health() const { return _health; }
         int8_t get_player() const { return _player; }
     // private:
     protected:
         int8_t _x;
         int8_t _y;
-        int8_t health;
-        int8_t tear;
-        int8_t cost;
+        int8_t _health;
+        int8_t _tear;
+        int8_t _cost;
         int8_t _player;
-        int8_t _unit_type
+        int8_t _unit_type;
 };
 
 #endif
