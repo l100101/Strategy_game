@@ -24,7 +24,7 @@ class Unit
             if (_player == LOW_PLAYER) _y -= y;
             if (_player == HIGH_PLAYER) _y += y;
         }
-
+        int8_t get_player() const { return _player; }
     private:
         int8_t _x;
         int8_t _y;

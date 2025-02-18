@@ -3,17 +3,20 @@
 // Определять местоположение строения по сигналу с разных пинов(со сдвигового регистра)
 
 #include "../alldefs.h"
-gameField field(8);
+
+
+
+gameField field(FIELD_SIZE);
 TimerMs timerTower(0, 1);
-TimerMs timerField(1000, 1, 0);
-TimerMs timerSend(1001, 1, 0);
+TimerMs timerField(500, 1, 0);
+TimerMs timerSend(500, 1, 0);
 
 
 void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
   Serial.begin(115200);
-  field.addFactory(7,7, LOW_PLAYER);
+  field.addFactory(FIELD_SIZE-1, FIELD_SIZE-1, LOW_PLAYER);
   field.addFactory(0,0, HIGH_PLAYER);
 }
 
@@ -27,13 +30,9 @@ void loop()
   // --------------------------- MOVE UNITS -----------------------------
   if(timerField.tick())
   {
-    static uint64_t counter = 0;
-    if (counter %2 ==0)
-      field.createUnits();
-    counter++;
-
+    field.createUnits();
+      
     field.update();
-    
 
     // Serial.print(field.getUnitExist(0,0));
     // Serial.print(field.getUnitExist(1,0));
@@ -50,8 +49,8 @@ void loop()
   // ---------------------------- PRINT FIELD -----------------------------
   if(timerSend.tick())
   {
-    for (int y = 0; y < 8; y++) {
-      for (int x = 0; x < 8; x++) {
+    for (int y = 0; y < FIELD_SIZE; y++) {
+      for (int x = 0; x < FIELD_SIZE; x++) {
         // int color = units_on_map[y][x] ? 255 : 0;
         uint8_t color = 0;
         if( field.getUnitExist(x, y))

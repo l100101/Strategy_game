@@ -41,8 +41,13 @@ public:
     void update(){
         auto it = units_on_map.begin();
         while (it != units_on_map.end()) {
-            // it->moveX(1);
             it->moveY(1);
+            
+            if (it->get_x() > _size/2 && it->get_player() == LOW_PLAYER)
+                it->moveX(1);
+            if (it->get_x() < _size/2-1 && it->get_player() == HIGH_PLAYER)
+                it->moveX(1);
+
             ++it;
         }
 
@@ -54,15 +59,16 @@ public:
         //     // Serial.println(i);
         // }
         checkMoveField();
-
+        steps_count++;
     };
 
     void createUnits()
     {
-        for (auto Factory : factories)
-        {
+        // if(steps_count%2 == 0)  {
+        for (auto Factory : factories){
             units_on_map.push_back(Factory.createUnit(Factory.get_player()));
         }
+        // }
     }
 
     bool getUnitExist(int8_t x, int8_t y){
@@ -90,6 +96,7 @@ private:
     // uint8_t units_on_map[8][8] = {0};
     std::vector<Factory> factories;
     std::vector<Unit> units_on_map;
+    uint64_t steps_count = 0;
 };
 
 

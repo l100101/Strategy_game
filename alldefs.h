@@ -17,6 +17,8 @@
 
 #define TRANSMIT_PIN 4 // пин для передачи
 #define RECEIVE_PIN 5  // пин для приёма сигнала
+#define FIELD_SIZE 16
+#define STEPS_PER_FOR_UNIT_CREATE 2
 
 extern TimerMs timerTower;
 extern TimerMs timerField;

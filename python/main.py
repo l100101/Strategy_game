@@ -3,7 +3,7 @@ import serial
 
 # Параметры матрицы
 WIDTH, HEIGHT = 400, 400
-GRID_SIZE = 8
+GRID_SIZE = 16
 PIXEL_SIZE = WIDTH // GRID_SIZE
 
 # Инициализация Serial (укажи правильный порт)
