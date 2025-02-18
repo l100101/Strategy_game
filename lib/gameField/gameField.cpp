@@ -38,29 +38,36 @@ Unit* gameField::checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::i
 }
 
 void gameField::update(){
-    //-------------------------------MOVE UNITS-----------------------------
     auto it = units_on_map.begin();
+
     while (it != units_on_map.end()) {
+    
+    //-------------------------------SET_DIRECTION UNITS-----------------------------
+    
+        if (it->get_x() > _size/2 && it->get_player() == LOW_PLAYER)
+            it->set_direction(DIR_UP_LEFT);
+        
+        if (it->get_x() < _size/2-1 && it->get_player() == HIGH_PLAYER)        
+            it->set_direction(DIR_DOWN_RIGHT);
     //-------------------------------ATTACK UNITS----------------------------
         Unit* enemy = checkAttackRange(units_on_map, it);
             if (enemy) {
                 enemy->damaged(1);
                 it->damaged(1);
                 if (it->get_health() <= 0) 
-                    it = units_on_map.erase(it); // erase возвращает следующий итератор
-                
+                    {
+                        it = units_on_map.erase(it); // erase возвращает следующий итератор
+                        // it->set_direction(random(DIR_COUNT);
+                    }
+
                 if (enemy->get_health() <= 0) 
                     enemy = units_on_map.erase(enemy); // erase возвращает следующий итератор
+                    enemy->set_direction(random(DIR_COUNT-1));
             }    
         
             
-        it->moveY(1);
-
-        if (it->get_x() > _size/2 && it->get_player() == LOW_PLAYER)
-        it->moveX(1);
-            if (it->get_x() < _size/2-1 && it->get_player() == HIGH_PLAYER)
-            it->moveX(1);
-            
+    //-------------------------------MOVE UNITS----------------------------
+        it->moveAuto();
         ++it;
     }
     checkMoveField();
