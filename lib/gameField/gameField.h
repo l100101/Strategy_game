@@ -22,7 +22,7 @@ class gameField
 public:
     gameField(uint8_t size) : _size(size) {
         clear();  // Вызываем метод очистки
-        units_on_map.push_back(factories[0].createUnit());
+        // units_on_map.push_back(factories[0].createUnit());
     }
     ~gameField() {};
     void addFactory(int8_t x, int8_t y, int8_t player);
@@ -61,7 +61,7 @@ public:
     {
         for (auto Factory : factories)
         {
-            units_on_map.push_back(Factory.createUnit());
+            units_on_map.push_back(Factory.createUnit(Factory.get_player()));
         }
     }
 

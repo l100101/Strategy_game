@@ -9,28 +9,6 @@ TimerMs timerField(1000, 1, 0);
 TimerMs timerSend(1001, 1, 0);
 
 
-// const int responsePin = 2; // Пин, на который приходит ответ от слота
-
-// Количество юнитов, tower, MEX
-// const int numberOfUnits = 30;
-// const int numberOfTowers = 10;
-// const int numberOfMEX = 10;
-
-// Массив структур для хранения данных о юнитах
-// Unit units[numberOfUnits];
-// Tower towers[numberOfTowers];
-// MEX mex[numberOfMEX];
-
-// Factory rxFac; // приёмная структурs
-// // Tower rxTow;
-// Unit rxUnit;
-// MEX rxMEX;
-// byte bufferFac[sizeof(rxFac)];   // приёмный буфер
-// // byte bufferTow[sizeof(rxTow)];   // приёмный буфер
-// byte bufferUnit[sizeof(rxUnit)]; // приёмный буфер
-// byte bufferMEX[sizeof(rxMEX)];   // приёмный буфер
-
-
 void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
@@ -39,48 +17,6 @@ void setup()
   field.addFactory(0,0, HIGH_PLAYER);
 }
 
-// bool flag = false;
-// unsigned long startTime;
-
-// uint8_t sendSignal()
-// {
-//   digitalWrite(TRANSMIT_PIN, HIGH);
-//   digitalWrite(LED_BUILTIN, HIGH);
-//   startTime = millis();
-//   flag = 1;
-
-//   return 0;
-// }
-
-// uint8_t recieving()
-// {
-//   if (digitalRead(RECEIVE_PIN) == HIGH)
-//   {
-//     delayMicroseconds(50); // задержка 50 микросекунд для защиты от дребезга
-    
-//     if (digitalRead(RECEIVE_PIN) == LOW)//ложное 
-//       return 0;
-
-//     digitalWrite(TRANSMIT_PIN, LOW);
-//     digitalWrite(LED_BUILTIN, LOW);
-
-//     int recieve_time = millis() - startTime;
-//     if (recieve_time > 15)
-//       Serial.println(recieve_time);
-//     flag = 0;
-//   }
-//   return 0;
-// }
-
-// void clear_field() {
-//   for (int y = 0; y < 8; y++) {
-//     for (int x = 0; x < 8; x++) {
-//         units_on_map[y][x] = 0;
-//     }
-//   }
-// }
-
-
 void loop()
 {
   // Послал сигнал, запустил таймер, жду ответа, останавливаю таймер
@@ -88,19 +24,16 @@ void loop()
   //   sendSignal();
   // recieving();
 
-
   // --------------------------- MOVE UNITS -----------------------------
   if(timerField.tick())
   {
-    static uint16_t counter = 0;
+    static uint64_t counter = 0;
     if (counter %2 ==0)
       field.createUnits();
     counter++;
-    
+
     field.update();
     
-    // factory_p1.createUnit();
-    // factory_p2.createUnit();
 
     // Serial.print(field.getUnitExist(0,0));
     // Serial.print(field.getUnitExist(1,0));
