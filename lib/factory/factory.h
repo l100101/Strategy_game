@@ -6,7 +6,8 @@
 
 class Factory {
     public:
-        Factory(int x, int y);
+        Factory(int8_t x, int8_t y, int8_t player) : _x(x), _y(y), _player(player) {}
+        ~Factory() {};
         Unit createUnit();
         Unit moveUnit();
         int get_x() const;
@@ -15,7 +16,7 @@ class Factory {
         void set_y(int y);
     
     private:
-        int _x, _y;
+        int _x, _y, _player;
     };
 
 #endif

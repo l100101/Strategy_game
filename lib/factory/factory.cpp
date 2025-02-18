@@ -1,11 +1,10 @@
 #include "factory.h"
 
-Factory::Factory(int x, int y) : _x(x), _y(y) {}
+// Factory::Factory(int8_t x, int8_t y, int8_t player ) : _x(x), _y(y) {}
 
 Unit Factory::createUnit() {
-    return Unit(_x, _y);  // Юнит создаётся рядом с фабрикой
+    return Unit(_x, _y, LOW_PLAYER);  // Юнит создаётся рядом с фабрикой
 }
-
 
 
 void Factory::set_x(int x) { _x = x; }

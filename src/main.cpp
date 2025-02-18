@@ -51,8 +51,7 @@ void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
   Serial.begin(115200);
-  field.addFactory(0,0);
-
+  field.addFactory(0,0, LOW_PLAYER);
 }
 
 // bool flag = false;
@@ -97,8 +96,6 @@ void setup()
 // }
 
 
-
-
 void loop()
 {
   // Послал сигнал, запустил таймер, жду ответа, останавливаю таймер
@@ -115,27 +112,25 @@ void loop()
     // factory_p1.createUnit();
     // factory_p2.createUnit();
 
-    // units_on_map[unit_p1.y][unit_p1.x] = 1;
-    // units_on_map[unit_p2.y][unit_p2.x] = 1;
+    // Serial.print(field.getUnitExist(0,0));
+    // Serial.print(field.getUnitExist(1,0));
+    // Serial.print(field.getUnitExist(2,0));
+    // Serial.print(field.getUnitExist(3,0));
+    // Serial.print(field.getUnitExist(4,0));
+    // Serial.print(field.getUnitExist(5,0));
+    // Serial.print(field.getUnitExist(6,0));
+    // Serial.print(field.getUnitExist(7,0));
+    // Serial.println();
     
-    // unit_p1.y++;
-    // unit_p2.y--;
-    
-    // field.update(&unit_p1, &unit_p2);
   }
   
-  // if (unit_p1.y > 7)
-  //   unit_p1.y = 0;
-  // if (unit_p2.y < 0)
-  //   unit_p2.y = 7;
-
   // ---------------------------- PRINT FIELD -----------------------------
   if(timerSend.tick())
   {
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         // int color = units_on_map[y][x] ? 255 : 0;
-        int color = field.getUnit(x, y) ? 255 : 0;
+        uint8_t color = field.getUnitExist(x, y) ? 255 : 0;
         Serial.print(color); 
         Serial.print(" ");
       }
@@ -143,6 +138,8 @@ void loop()
     }
     Serial.println("---"); // Разделитель кадров 
   }
+
+
 }
 
 // int checkForResponse(unsigned long duration, unsigned long window)

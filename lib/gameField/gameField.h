@@ -22,21 +22,28 @@ class gameField
 public:
     gameField(uint8_t size) : _size(size) {
         clear();  // Вызываем метод очистки
+        units_on_map.push_back(factories[0].createUnit());
     }
     ~gameField() {};
-    void addFactory(int x, int y);
-    
-    void update(){
+    void addFactory(int8_t x, int8_t y, int8_t player);
+    void checkMoveField()
+    {
+        if (units_on_map[0].get_x() > 7)
+            units_on_map[0].set_x(0);
+        if (units_on_map[0].get_y() > 7)
+            units_on_map[0].set_y(0);
 
-        units_on_map.push_back(factories[0].createUnit());
-        units_on_map[0].set_x(1);
-        units_on_map[0].set_y(1);
+    }
+    void update(){
+        units_on_map[0].moveX(1);
+        units_on_map[0].moveY(1);
+        checkMoveField();
+
     };
 
-    bool getUnit(int8_t x, int8_t y){
-        if (units_on_map[0].get_x() == x)
-            return 1;
-        return 0;
+    bool getUnitExist(int8_t x, int8_t y){
+        //возвращаем true если есть юнит в указанной координате
+       return (x==units_on_map[0].get_x() && y==units_on_map[0].get_y());
     };
     void clear();
     

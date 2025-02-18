@@ -10,8 +10,8 @@ void gameField::clear() {
     // }
 }
 
-void gameField::addFactory(int x, int y) {
-    factories.push_back(Factory(x, y));
+void gameField::addFactory(int8_t x, int8_t y, int8_t player) {
+    factories.push_back(Factory(x, y, player));
 }
 
 
