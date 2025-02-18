@@ -42,7 +42,7 @@ def draw_grid(grid):
     screen.fill((0, 0, 0))
     for y in range(GRID_SIZE):
         for x in range(GRID_SIZE):
-            color = (grid[y][x], grid[y][x], grid[y][x])  # Оттенки серого
+            color = (grid[y][x], 128, grid[y][x])  # Оттенки серого
             pygame.draw.rect(screen, color, (x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE))
     pygame.display.flip()
 

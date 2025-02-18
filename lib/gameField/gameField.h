@@ -36,12 +36,12 @@ public:
                 ++it; // Переход к следующему элементу, если не удаляем
             }
         }
-        Serial.println("Units on map: " + String(units_on_map.size()));
+        // Serial.println("Units on map: " + String(units_on_map.size()));
     }
     void update(){
         auto it = units_on_map.begin();
         while (it != units_on_map.end()) {
-            it->moveX(1);
+            // it->moveX(1);
             it->moveY(1);
             ++it;
         }
@@ -74,6 +74,15 @@ public:
        }
        return 0;
     };
+
+    bool getFactoryExist(int8_t x, int8_t y){
+        //возвращаем true если есть factory в указанной координате
+        for( auto Factory : factories){
+            if (Factory.get_x() == x && Factory.get_y() == y)
+                return true;
+        }
+        return 0;
+    }
     void clear();
     
 private:

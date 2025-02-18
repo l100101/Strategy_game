@@ -92,7 +92,11 @@ void loop()
   // --------------------------- MOVE UNITS -----------------------------
   if(timerField.tick())
   {
-    field.createUnits();
+    static uint16_t counter = 0;
+    if (counter %2 ==0)
+      field.createUnits();
+    counter++;
+    
     field.update();
     
     // factory_p1.createUnit();
@@ -116,7 +120,12 @@ void loop()
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         // int color = units_on_map[y][x] ? 255 : 0;
-        uint8_t color = field.getUnitExist(x, y) ? 255 : 0;
+        uint8_t color = 0;
+        if( field.getUnitExist(x, y))
+          color = 255;
+        else if( field.getFactoryExist(x, y))
+          color = 128;
+
         Serial.print(color); 
         Serial.print(" ");
       }
