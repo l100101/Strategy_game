@@ -31,27 +31,12 @@ TimerMs timerSend(1001, 1, 0);
 // byte bufferMEX[sizeof(rxMEX)];   // приёмный буфер
 
 
-void setup_units() {
-  // unit_p1.x = factory_p1.x + 0;
-  // unit_p1.y = factory_p1.y + 0;
-
-  // unit_p2.x = factory_p2.x - 0;
-  // unit_p2.y = factory_p2.y - 0;
-}
-
-void setup_factory() {
-  // factory_p1.x = 0;
-  // factory_p1.y = 0;
-
-  // factory_p2.x = 7;
-  // factory_p2.y = 7;
-}
-
 void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
   Serial.begin(115200);
-  field.addFactory(0,0, LOW_PLAYER);
+  field.addFactory(7,7, LOW_PLAYER);
+  field.addFactory(0,0, HIGH_PLAYER);
 }
 
 // bool flag = false;
@@ -107,8 +92,9 @@ void loop()
   // --------------------------- MOVE UNITS -----------------------------
   if(timerField.tick())
   {
-    field.clear();
+    field.createUnits();
     field.update();
+    
     // factory_p1.createUnit();
     // factory_p2.createUnit();
 

@@ -17,8 +17,8 @@ class Unit
         void set_x(int x) { _x = x; }
         void set_y(int y) { _y = y; }
         void moveX(int8_t x) { 
-            if (_player == LOW_PLAYER) _x += x;
-            if (_player == HIGH_PLAYER) _x -= x;
+            if (_player == LOW_PLAYER) _x -= x;
+            if (_player == HIGH_PLAYER) _x += x;
         }
         void moveY(int y) {
             if (_player == LOW_PLAYER) _y -= y;
