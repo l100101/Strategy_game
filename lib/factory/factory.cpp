@@ -6,6 +6,11 @@ Unit Factory::createUnit() {
     return Unit(_x, _y);  // Юнит создаётся рядом с фабрикой
 }
 
+
+
+void Factory::set_x(int x) { _x = x; }
+void Factory::set_y(int y) { _y = y; }
+
 int Factory::get_x() const { return _x; }
 int Factory::get_y() const { return _y; }
 

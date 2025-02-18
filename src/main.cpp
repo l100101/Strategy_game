@@ -51,6 +51,7 @@ void setup()
 {
   pinMode(RECEIVE_PIN, INPUT);
   Serial.begin(115200);
+  field.addFactory(0,0);
 
 }
 
@@ -110,6 +111,7 @@ void loop()
   if(timerField.tick())
   {
     field.clear();
+    field.update();
     // factory_p1.createUnit();
     // factory_p2.createUnit();
 
@@ -133,7 +135,8 @@ void loop()
     for (int y = 0; y < 8; y++) {
       for (int x = 0; x < 8; x++) {
         // int color = units_on_map[y][x] ? 255 : 0;
-        // Serial.print(color); 
+        int color = field.getUnit(x, y) ? 255 : 0;
+        Serial.print(color); 
         Serial.print(" ");
       }
       Serial.println();

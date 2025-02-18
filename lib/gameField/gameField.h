@@ -15,6 +15,7 @@
 
 #include <stdint.h>
 #include <factory.h>
+#include <vector>
 
 class gameField
 {
@@ -23,16 +24,29 @@ public:
         clear();  // Вызываем метод очистки
     }
     ~gameField() {};
+    void addFactory(int x, int y);
+    
+    void update(){
 
+        units_on_map.push_back(factories[0].createUnit());
+        units_on_map[0].set_x(1);
+        units_on_map[0].set_y(1);
+    };
 
+    bool getUnit(int8_t x, int8_t y){
+        if (units_on_map[0].get_x() == x)
+            return 1;
+        return 0;
+    };
     void clear();
     
     
     // void update(Unit *unit_p1,Unit *unit_p2);
 private:
     uint8_t _size;
-    uint8_t units_on_map[8][8] = {0};
-
+    // uint8_t units_on_map[8][8] = {0};
+    std::vector<Factory> factories;
+    std::vector<Unit> units_on_map;
 };
 
 
