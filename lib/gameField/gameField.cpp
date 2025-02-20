@@ -1,15 +1,17 @@
 #include "gameField.h"
 
-void gameField::checkMoveField()
+void gameField::checkMoveField(Unit *unit)
 {
-    auto it = units_on_map.begin();
-    while (it != units_on_map.end()) {
-        if (it->get_x() >= _size || it->get_y() >= _size) {
-            it = units_on_map.erase(it); // erase возвращает следующий итератор
-        } else {
-            ++it; // Переход к следующему элементу, если не удаляем
-        }
-    }
+    if (unit->get_x() < 0 || unit->get_x() >= _size || unit->get_y() < 0 || unit->get_y() >= _size) 
+       unit = units_on_map.erase(unit);     // erase возвращает следующий итератор
+    // auto it = units_on_map.begin();
+    // while (it != units_on_map.end()) {
+        // if (it->get_x() >= _size || it->get_y() >= _size) {
+            // it = units_on_map.erase(it); // erase возвращает следующий итератор?
+        // } else {
+        //     ++it; // Переход к следующему элементу, если не удаляем
+        // }
+    // }
     // Serial.println("Units on map: " + String(units_on_map.size()));
 }
 
@@ -17,7 +19,7 @@ Unit* gameField::checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::i
     int8_t x = it->get_x();
     int8_t y = it->get_y();
     int8_t player = it->get_player();
-    int8_t attackRange = 2; // Можно заменить на it->getAttackRange(), если такое есть
+    int8_t attackRange = ATTACK_RANGE; // Можно заменить на it->getAttackRange(), если такое есть
 
     for (auto enemy_it = units.begin(); enemy_it != units.end(); ++enemy_it) {
         if (enemy_it == it) continue; // Пропускаем самого себя
@@ -37,40 +39,50 @@ Unit* gameField::checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::i
     return 0;
 }
 
+void gameField::calculateDirection(Unit& unit) {
+    if (unit.get_x() > _size/2 && unit.get_player() == LOW_PLAYER)
+        unit.set_direction(DIR_U_UP);
+
+    if (unit.get_x() < _size/2-1 && unit.get_player() == HIGH_PLAYER)        
+        unit.set_direction(DIR_U_DOWN);
+    
+}
 void gameField::update(){
     auto it = units_on_map.begin();
-
     while (it != units_on_map.end()) {
-    
-    //-------------------------------SET_DIRECTION UNITS-----------------------------
-    
-        if (it->get_x() > _size/2 && it->get_player() == LOW_PLAYER)
-            it->set_direction(DIR_UP_LEFT);
+        checkMoveField(it);
+//-------------------------------SET_DIRECTION UNITS-----------------------------
+        calculateDirection(*it);    // Устанавливаем направление движения для каждого юнита
+
+        // if (it->get_x() > _size/2 && it->get_player() == LOW_PLAYER)
+        //     it->set_direction(DIR_UP_LEFT);
         
-        if (it->get_x() < _size/2-1 && it->get_player() == HIGH_PLAYER)        
-            it->set_direction(DIR_DOWN_RIGHT);
-    //-------------------------------ATTACK UNITS----------------------------
-        Unit* enemy = checkAttackRange(units_on_map, it);
-            if (enemy) {
+        // if (it->get_x() < _size/2-1 && it->get_player() == HIGH_PLAYER)        
+        //     it->set_direction(DIR_DOWN_RIGHT);
+//-------------------------------ATTACK UNITS------------------------------------
+        Unit* enemy = checkAttackRange(units_on_map, it);   //проверяем наличие противника в радиусе каждого юнита
+            if (enemy) {    //если увидели противника, наносим и получаем урон
                 enemy->damaged(1);
                 it->damaged(1);
                 if (it->get_health() <= 0) 
-                    {
-                        it = units_on_map.erase(it); // erase возвращает следующий итератор
-                        // it->set_direction(random(DIR_COUNT);
-                    }
-
-                if (enemy->get_health() <= 0) 
+                {
+                    it = units_on_map.erase(it); // erase возвращает следующий итератор
+                    it->set_direction(DIR_U_VERTICAL);
+                }
+                
+                if (enemy->get_health() <= 0) {
                     enemy = units_on_map.erase(enemy); // erase возвращает следующий итератор
-                    enemy->set_direction(random(DIR_COUNT-1));
+                    enemy->set_direction(DIR_U_VERTICAL);
+                }
             }    
-        
             
-    //-------------------------------MOVE UNITS----------------------------
+            
+//-------------------------------MOVE UNITS------------------------------------
         it->moveAuto();
         ++it;
     }
-    checkMoveField();
+    // checkMoveField();
+
     // for(size_t i = 0; i < units_on_map.size(); i++){
     //     units_on_map[i].moveX(1);
     //     units_on_map[i].moveY(1);
@@ -83,11 +95,11 @@ void gameField::update(){
 
 void gameField::createUnits()
 {
-    // if(steps_count%2 == 0)  {
+    if(steps_count%2 == 0)  {
     for (auto Factory : factories){
         units_on_map.push_back(Factory.createUnit(Factory.get_player()));
     }
-    // }
+    }
 }
 
 bool gameField::getUnitExist(int8_t x, int8_t y){

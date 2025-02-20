@@ -5,6 +5,7 @@
 // #include "lib/tower/tower.h"
 // #include "lib/gameField/gameField.h"
 // #include "lib/unit/unit.h"
+#include <microLED.h>
 #include <TimerMs.h>   
 #include <gameField.h>
 // #include <factory.h>
@@ -15,8 +16,12 @@
 #include <ArduinoSTL.h>
 // #include <GyverIO.h>
 
-#define TRANSMIT_PIN 4 // пин для передачи
-#define RECEIVE_PIN 5  // пин для приёма сигнала
+#define STRIP_PIN 2     // пин ленты
+#define NUMLEDS 20      // кол-во светодиодов
+#define COLOR_DEBTH 3
+
+#define TRANSMIT_PIN 4  // пин для передачи
+#define RECEIVE_PIN 5   // пин для приёма сигнала
 #define FIELD_SIZE 16
 #define STEPS_PER_FOR_UNIT_CREATE 2
 
@@ -24,6 +29,7 @@ extern TimerMs timerTower;
 extern TimerMs timerField;
 extern TimerMs timerSend;
 extern gameField field;
+extern microLED<NUMLEDS, STRIP_PIN, MLED_NO_CLOCK, LED_WS2818, ORDER_GRB, CLI_AVER> strip;
 
 
 // Unit unit_p1(0, 0);

@@ -9,6 +9,8 @@ gameField field(FIELD_SIZE);
 TimerMs timerTower(0, 1);
 TimerMs timerField(500, 1, 0);
 TimerMs timerSend(500, 1, 0);
+//replace for matrix
+microLED<NUMLEDS, STRIP_PIN, MLED_NO_CLOCK, LED_WS2818, ORDER_GRB, CLI_AVER> matrix;
 
 
 void setup()  {
@@ -16,6 +18,8 @@ void setup()  {
   Serial.begin(115200);
   field.addFactory(FIELD_SIZE-1, FIELD_SIZE-1, LOW_PLAYER);
   field.addFactory(0,0, HIGH_PLAYER);
+  // matrix.setBrightness(0);
+  // matrix.show();
 }
 
 void loop() {
