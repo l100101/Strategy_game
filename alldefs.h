@@ -3,11 +3,11 @@
 
 // #include "../lib/GyverBus/GBUSmini.h" // мини-библиотека с лёгкими функциями
 // #include "lib/tower/tower.h"
-// #include "lib/gameField/gameField.h"
 // #include "lib/unit/unit.h"
 #include <microLED.h>
 #include <TimerMs.h>   
 #include <gameField.h>
+// #include "lib/gameField/gameField.h"
 // #include <factory.h>
 // #include <unit.h>
 // #include "lib/factory/factory.h" // <"factory.h>
@@ -16,9 +16,12 @@
 #include <ArduinoSTL.h>
 // #include <GyverIO.h>
 
-#define STRIP_PIN 2     // пин ленты
-#define NUMLEDS 20      // кол-во светодиодов
 #define COLOR_DEBTH 3
+#define M_PIN 8       // пин матрицы
+#define M_WIDTH 16    // ширина матрицы
+#define M_HEIGHT 16    // высота матрицы
+#define NUMLEDS (M_WIDTH * M_HEIGHT) // для удобства запомним и количство ледов
+
 
 #define TRANSMIT_PIN 4  // пин для передачи
 #define RECEIVE_PIN 5   // пин для приёма сигнала
@@ -27,9 +30,8 @@
 
 extern TimerMs timerTower;
 extern TimerMs timerField;
-extern TimerMs timerSend;
+extern TimerMs timerShow;
 extern gameField field;
-extern microLED<NUMLEDS, STRIP_PIN, MLED_NO_CLOCK, LED_WS2818, ORDER_GRB, CLI_AVER> strip;
 
 
 // Unit unit_p1(0, 0);

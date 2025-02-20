@@ -26,6 +26,7 @@ public:
     gameField(uint8_t size) : _size(size) {}
     ~gameField() {};
     void addFactory(int8_t x, int8_t y, int8_t player);
+    void addWall(int8_t x, int8_t y);
     void checkMoveField(Unit *unit);
 
     Unit* checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::iterator it);
@@ -33,8 +34,9 @@ public:
     void createUnits();
 
     bool getUnitExist(int8_t x, int8_t y);
-    void calculateDirection(Unit& unit);
     bool getFactoryExist(int8_t x, int8_t y);
+    bool getWallExist(int8_t x, int8_t y);
+    void calculateDirection(Unit& unit);
     void clear();
     void show();
     

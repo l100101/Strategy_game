@@ -1,5 +1,11 @@
 #include "gameField.h"
+void gameField::addFactory(int8_t x, int8_t y, int8_t player) {
+    factories.push_back(Factory(x, y, player));
+}
 
+void gameField::addWall(int8_t x, int8_t y) {
+    walls_on_map.push_back(Wall(x, y));
+}
 void gameField::checkMoveField(Unit *unit)
 {
     if (unit->get_x() < 0 || unit->get_x() >= _size || unit->get_y() < 0 || unit->get_y() >= _size) 
@@ -40,13 +46,51 @@ Unit* gameField::checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::i
 }
 
 void gameField::calculateDirection(Unit& unit) {
+    int8_t new_dir = DIR_U_VERTICAL;
+
     if (unit.get_x() > _size/2 && unit.get_player() == LOW_PLAYER)
         unit.set_direction(DIR_U_UP);
-
     if (unit.get_x() < _size/2-1 && unit.get_player() == HIGH_PLAYER)        
         unit.set_direction(DIR_U_DOWN);
     
+    auto wall = walls_on_map.begin();
+    while (wall != walls_on_map.end()) {
+        if (unit.get_y() == wall->get_y() && unit.get_x() == wall->get_x())
+            unit.set_direction(DIR_U_HORIZONTAL);
+
+        // if (unit.get_direction() == DIR_U_UP )  {
+        //     if (unit.get_y()-1 == wall->get_y())    {
+        //         new_dir = DIR_U_HORIZONTAL;
+        //         unit.set_direction(new_dir);
+        //     }
+        // }
+        // else if (unit.get_direction() == DIR_U_DOWN) {
+        //     if (unit.get_y()+1 == wall->get_y())    {
+        //         new_dir = DIR_U_HORIZONTAL;
+        //         unit.set_direction(new_dir);
+        //     }
+        // }
+        // else if (unit.get_direction() == DIR_U_LEFT) {
+        //     if (unit.get_x()-1 == wall->get_x())    {
+        //         new_dir = DIR_U_VERTICAL;
+        //         unit.set_direction(new_dir);
+        //     }
+        // }
+        // else if (unit.get_direction() == DIR_U_RIGHT) {
+        //     if (unit.get_x()+1 == wall->get_x())    {
+        //         new_dir = DIR_U_VERTICAL;
+        //         unit.set_direction(new_dir);
+        //     }
+        // else {
+        //     unit.set_direction(new_dir);
+        // }
+    // }
+    // if unit.find(wall);
+    // unit.set_direction(DIR_U_HORIZONTAL);
+        wall++;
+    }
 }
+
 void gameField::update(){
     auto it = units_on_map.begin();
     while (it != units_on_map.end()) {
@@ -112,6 +156,14 @@ bool gameField::getUnitExist(int8_t x, int8_t y){
    return 0;
 }
 
+bool gameField::getWallExist(int8_t x, int8_t y){
+   for( auto wall : walls_on_map){
+       if (wall.get_x() == x && wall.get_y() == y)
+           return true;
+   }
+   return 0;
+}
+
 bool gameField::getFactoryExist(int8_t x, int8_t y){
     //возвращаем true если есть factory в указанной координате
     for( auto Factory : factories){
@@ -132,6 +184,10 @@ void gameField::show(){
                 color = 255;
             else if (getFactoryExist(x, y))
                 color = 128;
+            else if (getWallExist(x, y))
+                color = 164;
+            else
+                color = 0;
 
             Serial.print(color);
             Serial.print(" ");

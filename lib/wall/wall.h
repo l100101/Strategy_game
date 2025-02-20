@@ -4,7 +4,7 @@
 #include <Arduino.h>
 class Wall {
 public:
-    Wall(int8_t x, int8_t y, int8_t width, int8_t height) : _x(x), _y(y), _width(width), _height(height) {};
+    Wall(int8_t x, int8_t y) : _x(x), _y(y), _width(1), _height(1) {};
     void set_x(int8_t x) { _x = x; }
     void set_y(int8_t y) { _y = y; }
     void set_xy(int8_t x, int8_t y) { _x = x; _y = y; }
