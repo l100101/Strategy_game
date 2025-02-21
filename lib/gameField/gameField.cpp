@@ -180,14 +180,26 @@ void gameField::show(){
         {
             // int color = units_on_map[y][x] ? 255 : 0;
             uint8_t color = 0;
+            // if (getUnitExist(x, y))
+            //     color = 255;
+            // else if (getFactoryExist(x, y))
+            //     color = 128;
+            // else if (getWallExist(x, y))
+            //     color = 164;
+            // else
+            //     color = 0;
+
             if (getUnitExist(x, y))
-                color = 255;
+                color = COLOR_PINK;
+                // color = getUnitExist(x, y);
             else if (getFactoryExist(x, y))
-                color = 128;
+                // color = 128;
+                color = COLOR_GRAY;
             else if (getWallExist(x, y))
-                color = 164;
+                // color = 164;
+                color = COLOR_BROWN;
             else
-                color = 0;
+                color = COLOR_GREEN;
 
             Serial.print(color);
             Serial.print(" ");

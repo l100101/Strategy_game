@@ -20,6 +20,17 @@
 #include <vector>
 #include <wall.h>
 
+#define COLOR_BLACK     0
+#define COLOR_RED       1
+#define COLOR_GREEN     2
+#define COLOR_BLUE      3
+#define COLOR_WHITE     4
+#define COLOR_YELLOW    5
+#define COLOR_PINK      6
+#define COLOR_GRAY      7
+#define COLOR_BROWN     8
+#define COLOR_ORANGE    9
+
 class gameField
 {
 public:
