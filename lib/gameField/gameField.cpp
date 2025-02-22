@@ -45,7 +45,7 @@ Unit* gameField::checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::i
     return 0;
 }
 
-void gameField::calculateDirection(Unit& unit) {
+void gameField::calculateDirection(Unit& unit){
     int8_t new_dir = DIR_U_VERTICAL;
 
     if (unit.get_x() > _size/2 && unit.get_player() == LOW_PLAYER)
@@ -137,19 +137,18 @@ void gameField::update(){
     steps_count++;
 }
 
-void gameField::createUnits()
-{
-    if(steps_count%2 == 0)  {
-    for (auto Factory : factories){
-        units_on_map.push_back(Factory.createUnit(Factory.get_player()));
-    }
+void gameField::createUnits(){
+    if(steps_count % 2 == 0)  {
+        for (auto Factory : factories){
+            units_on_map.push_back(Factory.createUnit(Factory.get_player()));
+        }
     }
 }
 
 bool gameField::getUnitExist(int8_t x, int8_t y){
     //возвращаем true если есть юнит в указанной координате
 //    return (x==units_on_map[0].get_x() && y==units_on_map[0].get_y());
-   for( auto unit : units_on_map){
+   for( auto unit : units_on_map) {
        if (unit.get_x() == x && unit.get_y() == y)
            return true;
    }
@@ -162,6 +161,10 @@ bool gameField::getWallExist(int8_t x, int8_t y){
            return true;
    }
    return 0;
+}
+
+bool gameField::getPoolExist(int8_t x, int8_t y){
+    return pool.getExist(x, y);
 }
 
 bool gameField::getFactoryExist(int8_t x, int8_t y){
@@ -178,16 +181,7 @@ void gameField::show(){
     {
         for (int x = 0; x < _size; x++)
         {
-            // int color = units_on_map[y][x] ? 255 : 0;
             uint8_t color = 0;
-            // if (getUnitExist(x, y))
-            //     color = 255;
-            // else if (getFactoryExist(x, y))
-            //     color = 128;
-            // else if (getWallExist(x, y))
-            //     color = 164;
-            // else
-            //     color = 0;
 
             if (getUnitExist(x, y))
                 color = COLOR_PINK;
@@ -198,6 +192,8 @@ void gameField::show(){
             else if (getWallExist(x, y))
                 // color = 164;
                 color = COLOR_BROWN;
+            else if (getPoolExist(x, y))
+                color = COLOR_BLUE;
             else
                 color = COLOR_GREEN;
 

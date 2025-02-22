@@ -11,6 +11,7 @@ TimerMs timerField(500, 1, 0);
 TimerMs timerShow(500, 1, 0);
 microLED<NUMLEDS, M_PIN, MLED_NO_CLOCK, LED_WS2812, ORDER_GRB, CLI_AVER> matrix(M_WIDTH, M_HEIGHT, ZIGZAG, LEFT_TOP, DIR_DOWN);
 
+
 void setup()  {
   pinMode(RECEIVE_PIN, INPUT);
   Serial.begin(115200);
@@ -18,8 +19,10 @@ void setup()  {
   field.addFactory(0,0, HIGH_PLAYER);
   field.addWall(0, FIELD_SIZE/2);
   field.addWall(1, FIELD_SIZE/2);
-  field.addWall(14, FIELD_SIZE/2);
-  field.addWall(15, FIELD_SIZE/2);
+  field.addWall(3, FIELD_SIZE/2);
+  field.addWall(FIELD_SIZE-1, FIELD_SIZE/2);
+  field.addWall(FIELD_SIZE-2, FIELD_SIZE/2);
+  field.addWall(FIELD_SIZE-4, FIELD_SIZE/2);
   // matrix.setBrightness(0);
   // matrix.show();
 }

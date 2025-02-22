@@ -7,7 +7,7 @@ GRID_SIZE = 16
 PIXEL_SIZE = WIDTH // GRID_SIZE
 
 # Инициализация Serial (укажи правильный порт)
-ser = serial.Serial("COM6", 115200, timeout=1)
+ser = serial.Serial("COM9", 115200, timeout=1)
 
 # Инициализация Pygame
 pygame.init()
