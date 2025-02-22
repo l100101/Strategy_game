@@ -53,6 +53,8 @@ public:
     bool getFactoryExist(int8_t x, int8_t y);
     bool getWallExist(int8_t x, int8_t y);
     bool getPoolExist(int8_t x, int8_t y);
+    void poolGenerateCoin();
+    void poolStealCoin(int8_t player);
     void calculateDirection(Unit& unit);
     void clear();
     void show();
@@ -64,6 +66,7 @@ private:
     std::vector<Unit>   units_on_map;
     std::vector<Wall>   walls_on_map;
     uint64_t steps_count = 0;
+    
 };
 
 

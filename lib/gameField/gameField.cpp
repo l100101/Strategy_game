@@ -55,7 +55,7 @@ void gameField::calculateDirection(Unit& unit){
     
     auto wall = walls_on_map.begin();
     while (wall != walls_on_map.end()) {
-        if (unit.get_y() == wall->get_y() && unit.get_x() == wall->get_x())
+        if (((unit.get_y() == wall->get_y()+1) || (unit.get_y() == wall->get_y()-1))  && unit.get_x() == wall->get_x())
             unit.set_direction(DIR_U_HORIZONTAL);
 
         // if (unit.get_direction() == DIR_U_UP )  {
@@ -92,6 +92,13 @@ void gameField::calculateDirection(Unit& unit){
 }
 
 void gameField::update(){
+    if (steps_count % 2 == 0) {
+        poolGenerateCoin();
+    }
+    else {
+        poolStealCoin(LOW_PLAYER);
+    }
+
     auto it = units_on_map.begin();
     while (it != units_on_map.end()) {
         checkMoveField(it);
@@ -176,24 +183,41 @@ bool gameField::getFactoryExist(int8_t x, int8_t y){
     return 0;
 }
 
+void gameField::poolGenerateCoin() {
+    if (!pool.coinIsExist())
+        pool.generateCoin();
+}
+void gameField::poolStealCoin(int8_t player) {
+    if (pool.coinIsExist() && player == HIGH_PLAYER)
+        pool.stealCoin();
+
+    if (pool.coinIsExist() && player == LOW_PLAYER)
+        
+        pool.stealCoin();
+
+}
 void gameField::show(){
     for (int y = 0; y < _size; y++)
     {
         for (int x = 0; x < _size; x++)
         {
             uint8_t color = 0;
-
+//---------------------------------------------SHOW UNIT-------------------------------------------
             if (getUnitExist(x, y))
                 color = COLOR_PINK;
                 // color = getUnitExist(x, y);
+//---------------------------------------------SHOW FACTORY-----------------------------------------
             else if (getFactoryExist(x, y))
-                // color = 128;
                 color = COLOR_GRAY;
+//---------------------------------------------SHOW WALL--------------------------------------------
             else if (getWallExist(x, y))
-                // color = 164;
                 color = COLOR_BROWN;
-            else if (getPoolExist(x, y))
+//---------------------------------------------SHOW POOL--------------------------------------------
+            else if (getPoolExist(x, y) && !pool.coinIsExist())
                 color = COLOR_BLUE;
+            else if (getPoolExist(x, y) && pool.coinIsExist())
+                color = COLOR_YELLOW;
+//---------------------------------------------SHOW FIELD-------------------------------------------
             else
                 color = COLOR_GREEN;
 

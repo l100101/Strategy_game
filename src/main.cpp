@@ -17,9 +17,9 @@ void setup()  {
   Serial.begin(115200);
   field.addFactory(FIELD_SIZE-1, FIELD_SIZE-1, LOW_PLAYER);
   field.addFactory(0,0, HIGH_PLAYER);
-  field.addWall(0, FIELD_SIZE/2);
-  field.addWall(1, FIELD_SIZE/2);
-  field.addWall(3, FIELD_SIZE/2);
+  field.addWall(0, FIELD_SIZE/2-1);
+  field.addWall(1, FIELD_SIZE/2-1);
+  field.addWall(3, FIELD_SIZE/2-1);
   field.addWall(FIELD_SIZE-1, FIELD_SIZE/2);
   field.addWall(FIELD_SIZE-2, FIELD_SIZE/2);
   field.addWall(FIELD_SIZE-4, FIELD_SIZE/2);

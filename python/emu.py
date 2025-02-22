@@ -40,16 +40,17 @@ def read_serial():
 
 def draw_grid(grid):
     #colors
-    color_black = 0
-    color_red = 1
-    color_green = 2
-    color_blue = 3
-    color_white = 4
-    color_yellow = 5
-    color_pink = 6
-    color_gray = 7
-    color_brown = 8
-    color_orange = 9
+    color_black     = 0
+    color_red       = 1
+    color_green     = 2
+    color_blue      = 3
+    color_white     = 4
+    color_yellow    = 5
+    color_pink      = 6
+    color_gray      = 7
+    color_brown     = 8
+    color_orange    = 9
+    color_tblue     = 10
 
     screen.fill((0, 0, 0))
     for y in range(GRID_SIZE):
@@ -62,7 +63,7 @@ def draw_grid(grid):
             elif grid[y][x] == color_green:
                 color = (0, 255, 0)
             elif grid[y][x] == color_blue:
-                color = (0, 0, 255)
+                color = (0, 170, 255)
             elif grid[y][x] == color_white:
                 color = (255, 255, 255)
             elif grid[y][x] == color_yellow:
@@ -75,6 +76,8 @@ def draw_grid(grid):
                 color = (165, 42, 42)
             elif grid[y][x] == color_orange:
                 color = (255, 165, 0)
+            elif grid[y][x] == color_tblue:
+                color = (0, 0, 255)
             pygame.draw.rect(screen, color, (x * PIXEL_SIZE, y * PIXEL_SIZE, PIXEL_SIZE, PIXEL_SIZE))
     pygame.display.flip()
 

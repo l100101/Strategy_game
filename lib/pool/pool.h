@@ -22,11 +22,15 @@ class Pool
         int8_t get_size() { return _size; }
         int8_t get_x(int8_t index) { return _x[index]; }
         int8_t get_y(int8_t index) { return _y[index]; }
+        void generateCoin() { coinGenerated = true; }
+        void stealCoin() { coinGenerated = false; }
+        bool coinIsExist() { return coinGenerated; }
     private:
         int8_t _x[POOL_SIZE];
         int8_t _y[POOL_SIZE];
         bool _isExist; 
         int8_t _size = POOL_SIZE;
+        bool coinGenerated = false;
 };
 
 #endif
