@@ -46,7 +46,7 @@ Unit* gameField::checkAttackRange(std::vector<Unit>& units, std::vector<Unit>::i
 }
 
 void gameField::calculateDirection(Unit& unit){
-    int8_t new_dir = DIR_U_VERTICAL;
+    // int8_t new_dir = DIR_U_VERTICAL;
 
     if (unit.get_x() > _size/2 && unit.get_player() == LOW_PLAYER)
         unit.set_direction(DIR_U_UP);
